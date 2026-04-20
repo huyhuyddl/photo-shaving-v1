@@ -1,40 +1,12 @@
-/**
- * fetchModelData.js - Phiên bản cho CodeSandbox (không cần server)
- * Nếu muốn chạy với server thật (node server.js):
- *   1. Chạy: node server.js
- *   2. Thay nội dung file này bằng fetchModelData.server.js
- */
+const API_BASE = "http://localhost:3000";
 
-import models from "../modelData/models";
+async function fetchModel(url) {
+  const response = await fetch(API_BASE + url);
 
-function fetchModel(url) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (url === "/user/list") {
-        resolve(models.userListModel());
-        return;
-      }
+  if (!response.ok) {
+    throw new Error(`API lỗi: ${response.status}`);
+  }
 
-      const userMatch = url.match(/^\/user\/([^/]+)$/);
-      if (userMatch) {
-        resolve(models.userModel(userMatch[1]));
-        return;
-      }
-
-      const photoMatch = url.match(/^\/photosOfUser\/([^/]+)$/);
-      if (photoMatch) {
-        resolve(models.photoOfUserModel(photoMatch[1]));
-        return;
-      }
-
-      if (url === "/test/info") {
-        resolve(models.schemaInfo());
-        return;
-      }
-
-      resolve(null);
-    }, 100);
-  });
+  return await response.json();
 }
-
 export default fetchModel;

@@ -9,7 +9,7 @@ function UserList() {
   useEffect(() => {
     fetchModel("/user/list").then((data) => setUsers(data));
   }, []);
-
+  console.log("Dữ liệu nhận được từ API:", users);
   return (
     <List>
       {users.map((user) => (
@@ -19,7 +19,11 @@ function UserList() {
           to={`/users/${user._id}`}
           button
         >
-          <ListItemText primary={`${user.first_name} ${user.last_name}`} />
+          <ListItemText
+            primary={
+              user.name || `${user.first_name || ""} ${user.last_name || ""}`
+            }
+          />{" "}
         </ListItem>
       ))}
     </List>

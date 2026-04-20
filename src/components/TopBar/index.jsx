@@ -28,7 +28,7 @@ function TopBar() {
     <AppBar position="absolute">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Nguyen Van A {/* ← Thay tên của bạn */}
+          Lê Đức Huy
         </Typography>
         <Typography variant="h6">{getContext()}</Typography>
       </Toolbar>

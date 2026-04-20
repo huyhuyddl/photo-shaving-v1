@@ -14,11 +14,20 @@ function UserPhotos() {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-    fetchModel(`/photosOfUser/${userId}`).then((data) => setPhotos(data));
+    fetchModel(`/photo/photosOfUser/${userId}`).then((data) => setPhotos(data));
   }, [userId]);
 
-  if (!photos.length) return <Typography>Loading...</Typography>;
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchModel(`/photo/photosOfUser/${userId}`).then((data) => {
+      setPhotos(data);
+      setLoading(false);
+    });
+  }, [userId]);
+
+  if (loading) return <Typography>Loading...</Typography>;
+  if (!photos.length) return <Typography>No photos yet.</Typography>;
   return (
     <div>
       {photos.map((photo) => (
